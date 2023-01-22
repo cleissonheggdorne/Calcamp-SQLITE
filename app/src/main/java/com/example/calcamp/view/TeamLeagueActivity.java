@@ -52,7 +52,7 @@ public class TeamLeagueActivity extends AppCompatActivity implements SelectListe
     }
     protected void populateTeams(){
         TeamController teamController = new TeamController(this);
-        List<Team> list = teamController.findAllController();
+        List<Team> list = teamController.findNoLeagueController(league.getId());
         AdapterTeam adapter = new AdapterTeam(list, this);
         recycleViewTeams.setAdapter(adapter);
     }

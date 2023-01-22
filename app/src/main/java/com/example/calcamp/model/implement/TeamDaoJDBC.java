@@ -98,4 +98,25 @@ public class TeamDaoJDBC implements TeamDAO {
         return list;
     }
 
+    @Override
+    public List<Team> findNoLeague(Integer id){
+        dbh.openDataBase();
+        List<Team> list = new ArrayList<Team>();
+        String sql = "select * from team\n"
+                    +"where id not in (select id_team from team_ligue\n"
+                    +"where id_league = "+ id +")";
+        Cursor cursor = sqliteDb.rawQuery(sql, null);
+        if (cursor.getCount() > 0){
+            if(cursor.moveToFirst()){
+                do{
+                    Team team = new Team(cursor.getInt(0), cursor.getString(1));
+                    list.add(team);
+                }while(cursor.moveToNext());
+            }
+        }
+        cursor.close();
+        sqliteDb.close();
+        return list;
+    }
+
 }

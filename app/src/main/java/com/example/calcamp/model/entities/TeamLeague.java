@@ -1,5 +1,7 @@
 package com.example.calcamp.model.entities;
 
+import java.util.Objects;
+
 public class TeamLeague {
 
     private Team team;
@@ -63,5 +65,17 @@ public class TeamLeague {
                 + punctuation + "]";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TeamLeague that = (TeamLeague) o;
+        return Objects.equals(team, that.team) && Objects.equals(league, that.league);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(team, league);
+    }
 
 }

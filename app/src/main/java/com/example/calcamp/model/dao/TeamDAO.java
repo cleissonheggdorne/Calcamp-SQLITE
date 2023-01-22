@@ -10,6 +10,7 @@ public interface TeamDAO {
         long deleteById(Integer id);
         Team findById(Integer id);
         List<Team> findAll();
+        List<Team> findNoLeague(Integer id);
 }
 
 

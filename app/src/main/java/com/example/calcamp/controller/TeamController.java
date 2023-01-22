@@ -37,4 +37,9 @@ public class TeamController {
         TeamDAO teamDao = DAOFactory.createTeamDao(context);
         return(teamDao.findAll());
     }
+
+    public List<Team> findNoLeagueController(Integer id) {
+        TeamDAO teamDao = DAOFactory.createTeamDao(context);
+        return(teamDao.findNoLeague(id));
+    }
 }

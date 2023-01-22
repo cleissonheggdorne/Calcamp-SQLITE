@@ -31,6 +31,9 @@ public class TeamLeagueDaoSQLITE implements TeamLeagueDAO {
     @Override
     public long insert(TeamLeague obj) {
         dbh.openDataBase();
+        if(findByIdLeague(obj) != null){
+            return -1;
+        };
         ContentValues contentValues = new ContentValues();
         contentValues.put("id_team", obj.getTeam().getId());
         contentValues.put("id_league", obj.getLeague().getId());
@@ -65,7 +68,7 @@ public class TeamLeagueDaoSQLITE implements TeamLeagueDAO {
                 "inner join punctuation_type pt on\n" +
                 "pt.id = l.id_punctuation_type\n" +
                 "WHERE tl.id_league = " + id;
-
+        //sqliteDb.delete("team_ligue", " id_league<>0",null);
         Cursor cursor = sqliteDb.rawQuery(sql, null);
         if (cursor.getCount() > 0){
             if(cursor.moveToFirst()){
@@ -79,6 +82,7 @@ public class TeamLeagueDaoSQLITE implements TeamLeagueDAO {
             }
         }
         cursor.close();
+        dbh.close();
         sqliteDb.close();
         return list;
     }
@@ -117,5 +121,34 @@ public class TeamLeagueDaoSQLITE implements TeamLeagueDAO {
     @Override
     public List<TeamLeague> findAll() {
         return null;
+    }
+
+    protected TeamLeague findByIdLeague(TeamLeague tl) {
+        TeamLeague teamLeague = null;
+        String sql = "select t.id as idTeam, t.name as nameTeam," +
+                "l.id as idLeague, l.name as nameLeague," +
+                " l.id_punctuation_type as idPunctuationType, pt.name as namePuncutuationType," +
+                " tl.position, tl.punctuation from team_ligue tl\n" +
+                "inner join team t on\n" +
+                "t.id = tl.id_team\n" +
+                "inner join league l on\n" +
+                "l.id = tl.id_league\n" +
+                "inner join punctuation_type pt on\n" +
+                "pt.id = l.id_punctuation_type\n" +
+                "WHERE tl.id_league = " + tl.getLeague().getId() + "\n"+
+                "AND tl.id_team = "+ tl.getTeam().getId();
+        Cursor cursor = sqliteDb.rawQuery(sql, null);
+        if (cursor.getCount() > 0){
+            if(cursor.moveToFirst()){
+                do{
+                    Team team = instantiateTeam(cursor);
+                    PunctuationType punctuationType = instantiatePunctuationType(cursor);
+                    League league = instantiateLeague(cursor, punctuationType);
+                    teamLeague = instantiateTeamLeague(cursor, team, league);
+                }while(cursor.moveToNext());
+            }
+        }
+        cursor.close();
+        return teamLeague;
     }
 }

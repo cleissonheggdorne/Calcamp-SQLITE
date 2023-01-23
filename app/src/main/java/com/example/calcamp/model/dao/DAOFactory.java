@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.calcamp.db.DataBaseHelper;
 import com.example.calcamp.model.implement.LeagueDaoSQLITE;
+import com.example.calcamp.model.implement.PunctuationPositionDaoSQLITE;
 import com.example.calcamp.model.implement.PunctuationTypeDaoSQLITE;
 import com.example.calcamp.model.implement.TeamDaoJDBC;
 import com.example.calcamp.model.implement.TeamLeagueDaoSQLITE;
@@ -20,5 +21,8 @@ public class DAOFactory {
     }
     public static TeamLeagueDAO createTeamLeagueDao(Context context) {
         return new TeamLeagueDaoSQLITE(new DataBaseHelper(context));
+    }
+    public static PunctuationPositionDAO createPunctuationPositionDao(Context context) {
+        return new PunctuationPositionDaoSQLITE(new DataBaseHelper(context));
     }
 }

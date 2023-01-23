@@ -121,6 +121,7 @@ public class TeamLeagueDaoSQLITE implements TeamLeagueDAO {
     @Override
     public List<TeamLeague> findAll() {
         return null;
+
     }
 
     protected TeamLeague findByIdLeague(TeamLeague tl) {

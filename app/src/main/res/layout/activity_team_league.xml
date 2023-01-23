@@ -10,7 +10,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleViewTeamLeague"
         android:layout_width="match_parent"
-        android:layout_height="349dp"
+        android:layout_height="419dp"
         android:layout_marginBottom="10dp"
         android:padding="10dp">
 

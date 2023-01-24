@@ -40,9 +40,9 @@ public class PunctuationPositionDaoSQLITE implements PunctuationPositionDAO {
         }
         Cursor cursor = sqliteDb.rawQuery(sql, null);
 
-        PunctuationPosition punctuationPosition = new PunctuationPosition();
         List<PunctuationPosition> list = new ArrayList<PunctuationPosition>();
         while (cursor.moveToNext()){
+            PunctuationPosition punctuationPosition = new PunctuationPosition();
             PunctuationType punctuationType =  instantiatePunctuationType(cursor);
             punctuationPosition.setPunctuationType(punctuationType);
             punctuationPosition.setPosition(cursor.getInt(1));

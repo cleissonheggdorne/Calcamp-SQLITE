@@ -68,7 +68,6 @@ public class TeamLeagueDaoSQLITE implements TeamLeagueDAO {
                 "inner join punctuation_type pt on\n" +
                 "pt.id = l.id_punctuation_type\n" +
                 "WHERE tl.id_league = " + id;
-        //sqliteDb.delete("team_ligue", " id_league<>0",null);
         Cursor cursor = sqliteDb.rawQuery(sql, null);
         if (cursor.getCount() > 0){
             if(cursor.moveToFirst()){

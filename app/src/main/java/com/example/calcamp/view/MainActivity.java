@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         Button btn_teams = (Button) findViewById(R.id.btn_teams);
         Button btn_leagues = (Button) findViewById(R.id.btn_leagues);
 
+
         btn_teams.setOnClickListener(new android.view.View.OnClickListener() {
             @Override
             public void onClick(View v) {

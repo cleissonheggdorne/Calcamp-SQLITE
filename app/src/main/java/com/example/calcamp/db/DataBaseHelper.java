@@ -54,27 +54,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-//    public List<Team> findAll(){
-//        openDataBase();
-//        sqliteDb = this.getWritableDatabase();
-//        List<Team> list = new ArrayList<Team>();
-//        String sql = "SELECT * FROM team ORDER by name";
-//        Cursor cursor = sqliteDb.rawQuery(sql, null);
-//        if (cursor.getCount() > 0){
-//            if(cursor.moveToFirst()){
-//                do{
-//                    Team team = new Team(cursor.getInt(0), cursor.getString(1));
-//                    list.add(team);
-//                }while(cursor.moveToNext());
-//            }
-//        }
-//        cursor.close();
-//        sqliteDb.close();
-//        return list;
-//    }
-
     private void initializebd() {
-        //database = new DataBaseHelper(this);
         File dbFile = context.getApplicationContext().getDatabasePath(DATABASE_NAME);
         if (dbFile.exists() == false){
             getReadableDatabase();

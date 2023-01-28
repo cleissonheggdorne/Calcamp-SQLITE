@@ -37,7 +37,8 @@ public class TeamLeagueDaoSQLITE implements TeamLeagueDAO {
         ContentValues contentValues = new ContentValues();
         contentValues.put("id_team", obj.getTeam().getId());
         contentValues.put("id_league", obj.getLeague().getId());
-        long id = sqliteDb.insert("team_ligue", null, contentValues);
+        contentValues.put("match", obj.getMatch());
+        long id = sqliteDb.insert("team_league", null, contentValues);
         dbh.close();
         sqliteDb.close();
         return id;
@@ -60,7 +61,7 @@ public class TeamLeagueDaoSQLITE implements TeamLeagueDAO {
         String sql = "select t.id as idTeam, t.name as nameTeam," +
                 "l.id as idLeague, l.name as nameLeague," +
                 " l.id_punctuation_type as idPunctuationType, pt.name as namePuncutuationType," +
-                " tl.position, tl.punctuation from team_ligue tl\n" +
+                " tl.position, tl.punctuation from team_league tl\n" +
                 "inner join team t on\n" +
                 "t.id = tl.id_team\n" +
                 "inner join league l on\n" +
@@ -128,7 +129,7 @@ public class TeamLeagueDaoSQLITE implements TeamLeagueDAO {
         String sql = "select t.id as idTeam, t.name as nameTeam," +
                 "l.id as idLeague, l.name as nameLeague," +
                 " l.id_punctuation_type as idPunctuationType, pt.name as namePuncutuationType," +
-                " tl.position, tl.punctuation from team_ligue tl\n" +
+                " tl.position, tl.punctuation from team_league tl\n" +
                 "inner join team t on\n" +
                 "t.id = tl.id_team\n" +
                 "inner join league l on\n" +

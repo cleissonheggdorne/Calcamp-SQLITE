@@ -76,7 +76,7 @@ public class TeamLeagueActivity extends AppCompatActivity implements SelectListe
     public void onItemClicked(Object obj) {
         Team team = (Team) obj;
         TeamLeagueController teamLeagueController = new TeamLeagueController(this);
-        TeamLeague teamLeague = new TeamLeague(team, league, 0, 0);
+        TeamLeague teamLeague = new TeamLeague(team, league, 0, 0, 0);
         if(teamLeagueController.insertController(teamLeague) != -1){
             Alert.alert("New Team Inserted Successfully", this);
         }else{

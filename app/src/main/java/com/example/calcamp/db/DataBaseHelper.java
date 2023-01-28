@@ -15,7 +15,7 @@ import java.io.OutputStream;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "base.db";
+    public static final String DATABASE_NAME = "CALCAMP.db";
     public static final String LOCAL_DB = "/data/data/com.example.calcamp/databases/";
     private Context context;
     private SQLiteDatabase sqliteDb;
@@ -23,7 +23,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public DataBaseHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
-        initializebd();
+        //initializebd();
     }
 
     public DataBaseHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
@@ -32,6 +32,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db){
+        Migrations migration = new Migrations();
+        db.execSQL(migration.getTableTeam());
+        db.execSQL(migration.getTableLeague());
+        db.execSQL(migration.getTablePunctuationType());
+        db.execSQL(migration.getTableTeamLeague());
+        db.execSQL(migration.getTablePunctuationPosition());
+        db.execSQL(migration.getTableClassification());
+        db.execSQL(migration.getTriggerTeamLeagueClassification());
+        String insertPunctuationType = "INSERT INTO punctuation_type(name)\n" +
+                "VALUES('LBFF NOVA'),\n"+
+                       "('LBFF VELHA')\n";
+        db.execSQL(insertPunctuationType);
+
     }
 
     @Override

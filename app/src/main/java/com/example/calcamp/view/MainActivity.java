@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.calcamp.R;
+import com.example.calcamp.db.Migrations;
+import com.example.calcamp.model.dao.DAOFactory;
 import com.example.calcamp.view.LeagueActivity;
 
 public class MainActivity extends AppCompatActivity {

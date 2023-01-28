@@ -8,17 +8,19 @@ public class TeamLeague {
     private League league;
     private Integer position;
     private Integer punctuation;
+    private Integer match;
 
     public TeamLeague() {
 
     }
 
-    public TeamLeague(Team team, League league, Integer position, Integer punctuation) {
+    public TeamLeague(Team team, League league, Integer position, Integer punctuation, Integer match) {
         super();
         this.team = team;
         this.league = league;
         this.position = position;
         this.punctuation = punctuation;
+        this.match = match;
     }
 
     public TeamLeague(Team team, League league) {
@@ -57,6 +59,14 @@ public class TeamLeague {
 
     public void setPunctuation(int punctuation) {
         this.punctuation = punctuation;
+    }
+
+    public Integer getMatch() {
+        return match;
+    }
+
+    public void setMatch(Integer match) {
+        this.match = match;
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.calcamp.db.DataBaseHelper;
+import com.example.calcamp.db.Migrations;
 import com.example.calcamp.model.dao.TeamDAO;
 import com.example.calcamp.model.entities.Team;
 
@@ -103,7 +104,7 @@ public class TeamDaoJDBC implements TeamDAO {
         dbh.openDataBase();
         List<Team> list = new ArrayList<Team>();
         String sql = "select * from team\n"
-                    +"where id not in (select id_team from team_ligue\n"
+                    +"where id not in (select id_team from team_league\n"
                     +"where id_league = "+ id +")";
         Cursor cursor = sqliteDb.rawQuery(sql, null);
         if (cursor.getCount() > 0){

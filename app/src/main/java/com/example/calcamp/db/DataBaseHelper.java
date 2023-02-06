@@ -40,11 +40,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(migration.getTablePunctuationPosition());
         db.execSQL(migration.getTableClassification());
         db.execSQL(migration.getTriggerTeamLeagueClassification());
-        String insertPunctuationType = "INSERT INTO punctuation_type(name)\n" +
-                "VALUES('LBFF NOVA'),\n"+
-                       "('LBFF VELHA')\n";
-        db.execSQL(insertPunctuationType);
-
+        db.execSQL(migration.getInsertPunctuationType());
+        db.execSQL(migration.getInsertPunctuationPosition());
     }
 
     @Override

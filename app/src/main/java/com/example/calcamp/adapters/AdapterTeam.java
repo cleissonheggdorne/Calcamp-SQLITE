@@ -1,5 +1,6 @@
 package com.example.calcamp.adapters;
 
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.toolbox.NetworkImageView;
 import com.example.calcamp.R;
 import com.example.calcamp.SelectListener;
 import com.example.calcamp.model.entities.Team;
@@ -39,14 +41,14 @@ public class AdapterTeam extends RecyclerView.Adapter<AdapterTeam.MyViewHolder> 
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //Layout de cada linha
         View itemList = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.adapter_list, parent, false);
+                .inflate(R.layout.carditem, parent, false);
         return new MyViewHolder(itemList);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.name.setText(list.get(position).getName());
-        holder.image.setImageResource(R.drawable.avatar);
+        holder.image.setDefaultImageResId(R.drawable.avatar);
         holder.id.setText(Integer.toString(list.get(position).getId()));
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -65,9 +67,11 @@ public class AdapterTeam extends RecyclerView.Adapter<AdapterTeam.MyViewHolder> 
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name;
-        ImageView image;
+       // ImageView image;
         TextView id;
         CardView cardView;
+
+        NetworkImageView image;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);

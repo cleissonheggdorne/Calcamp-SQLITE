@@ -43,4 +43,13 @@ public class TeamLeagueController {
         teamLeagueDao = DAOFactory.createTeamLeagueDao(context);
         return teamLeagueDao.findByIdLeague(id);
     }
+
+    public void insertListController(List<TeamLeague> teamLeagueList) {
+        teamLeagueDao = DAOFactory.createTeamLeagueDao(context);
+        for(TeamLeague teamLeague : teamLeagueList){
+            if(teamLeagueDao.insert(teamLeague) != -1){
+                continue;
+            }
+        }
+    }
 }

@@ -37,6 +37,7 @@ public class TeamLeagueDaoSQLITE implements TeamLeagueDAO {
         ContentValues contentValues = new ContentValues();
         contentValues.put("id_team", obj.getTeam().getId());
         contentValues.put("id_league", obj.getLeague().getId());
+        contentValues.put("position", obj.getPosition());
         contentValues.put("match", obj.getMatch());
         long id = sqliteDb.insert("team_league", null, contentValues);
         dbh.close();

@@ -109,6 +109,36 @@ public class Migrations {
             "                                                                                                tl.position = NEW.position\n" +
             "                                                                                     );\n" +
             "END;\n";
+
+    private String insertPunctuationPosition = "insert into punctuation_position(id_punctuation_type, position, score)\n" +
+            "values (1,1,12),\n" +
+            "       (1,2,9),\n" +
+            "       (1,3,8),\n" +
+            "       (1,4,7),\n" +
+            "       (1,5,6),\n" +
+            "       (1,6,5),\n" +
+            "       (1,7,4),\n" +
+            "       (1,8,3),\n" +
+            "       (1,9,2),\n" +
+            "       (1,10,1),\n" +
+            "       (1,11,0),\n" +
+            "       (1,12,0),\n" +
+            "       (2,1,20),\n" +
+            "       (2,2,17),\n" +
+            "       (2,3,15),\n" +
+            "       (2,4,13),\n" +
+            "       (2,5,12),\n" +
+            "       (2,6,10),\n" +
+            "       (2,7,6),\n" +
+            "       (2,8,4),\n" +
+            "       (2,9,3),\n" +
+            "       (2,10,2),\n" +
+            "       (2,11,1),\n" +
+            "       (2,12,0)\n" +
+            "       on conflict (id_punctuation_type, position) do nothing;";
+    private String insertPunctuationType = "INSERT INTO punctuation_type(name)\n" +
+            "VALUES('LBFF NOVA'),\n"+
+            "('LBFF VELHA')\n";
     public String getTableTeam() {
         return tableTeam;
     }
@@ -135,5 +165,12 @@ public class Migrations {
 
     public String getTriggerTeamLeagueClassification() {
         return triggerTeamLeagueClassification;
+    }
+
+    public String getInsertPunctuationPosition() {
+        return insertPunctuationPosition;
+    }
+    public String getInsertPunctuationType() {
+        return insertPunctuationType;
     }
 }

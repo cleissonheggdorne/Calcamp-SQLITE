@@ -53,7 +53,7 @@ public class LeagueActivity extends AppCompatActivity implements SelectListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_league);
         inicializarComponentes();
-        setSupportActionBar(toolbar);
+       // setSupportActionBar(toolbar);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recycleView.setLayoutManager(llm);
         popularList();
@@ -104,7 +104,7 @@ public class LeagueActivity extends AppCompatActivity implements SelectListener 
         button = findViewById(R.id.btnNew);
         recycleView = findViewById(R.id.recycleView);
         spinner = (Spinner) findViewById(R.id.spinnerTypePunctuation);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //toolbar = (Toolbar) findViewById(R.id.toolbar);
     }
 
     private void popularList() {
@@ -128,7 +128,7 @@ public class LeagueActivity extends AppCompatActivity implements SelectListener 
         EditText ename;
         ImageView image;
         Spinner spinner;
-        Button btnDelete, btnUpdate, btnTeams;
+        Button btnDelete, btnUpdate, btnTeams, btnActivityTeamLeagueScore;;
 
         ename = (EditText) view.findViewById(R.id.etNamePopupLeague);
         image = (ImageView) view.findViewById(R.id.imagePopupLeague);
@@ -142,6 +142,7 @@ public class LeagueActivity extends AppCompatActivity implements SelectListener 
         btnDelete = view.findViewById(R.id.btnDeleteLeague);
         btnUpdate = view.findViewById(R.id.btnUpdateLeague);
         btnTeams = view.findViewById(R.id.btnPopupAddTeams);
+        btnActivityTeamLeagueScore = view.findViewById(R.id.btnPopupActivityTeamLeagueScore);
 
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -179,6 +180,15 @@ public class LeagueActivity extends AppCompatActivity implements SelectListener 
                 // Pass parameters between intents
                 teamLeagueActivity.putExtra("league", (League) obj);
                 startActivity(teamLeagueActivity);
+            }
+        });
+
+        btnActivityTeamLeagueScore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent teamLeagueScoreActivity = new Intent(getApplicationContext(), TeamLeagueScoreActivity.class);
+                teamLeagueScoreActivity.putExtra("league", (League) obj);
+                startActivity(teamLeagueScoreActivity);
             }
         });
 

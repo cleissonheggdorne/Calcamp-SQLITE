@@ -79,6 +79,12 @@
 
             </LinearLayout>
 
+            <Button
+                android:id="@+id/btnPopupActivityTeamLeagueScore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Button" />
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

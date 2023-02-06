@@ -4,38 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".view.EquipesActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycleView"
-            android:layout_width="match_parent"
-            android:layout_height="560dp">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-        <EditText
-            android:id="@+id/etNameTeam"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="testeteste" />
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btnNew"
-            android:layout_width="match_parent"
-            android:layout_height="63dp"
-            android:layout_marginBottom="616dp"
-            android:onClick="save"
-            android:text="Save" />
-    </LinearLayout>
+            <include
+                layout="@layout/toolbar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycleView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <EditText
+                android:id="@+id/etNameTeam"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="testeteste" />
+
+            <Button
+                android:id="@+id/btnNew"
+                android:layout_width="match_parent"
+                android:layout_height="63dp"
+                android:layout_marginBottom="616dp"
+                android:onClick="save"
+                android:text="Save"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -40,7 +40,7 @@ public class AdapterLeague extends RecyclerView.Adapter<AdapterLeague.MyViewHold
         context = parent.getContext();
         //Layout de cada linha
         View itemList = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.adapter_list, parent, false);
+                .inflate(R.layout.carditem, parent, false);
         return new MyViewHolder(itemList);
     }
 

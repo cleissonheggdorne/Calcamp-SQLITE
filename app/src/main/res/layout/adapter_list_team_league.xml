@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Pos"
-                android:textSize="30sp" />
+                android:textSize="20sp" />
 
             <ImageView
 
@@ -44,7 +44,7 @@
                 android:layout_width="118dp"
                 android:layout_height="wrap_content"
                 android:text="Team"
-                android:textSize="30sp" />
+                android:textSize="18sp" />
 
             <Spinner
                 android:id="@+id/adapterTeamLeagueSpinner"

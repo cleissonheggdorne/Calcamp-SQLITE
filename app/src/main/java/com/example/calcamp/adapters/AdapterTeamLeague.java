@@ -22,6 +22,7 @@ import com.example.calcamp.controller.PunctuationPositionController;
 import com.example.calcamp.model.entities.PunctuationPosition;
 import com.example.calcamp.model.entities.Team;
 import com.example.calcamp.model.entities.TeamLeague;
+import com.example.calcamp.tools.Alert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,22 +60,28 @@ public class AdapterTeamLeague extends RecyclerView.Adapter<AdapterTeamLeague.My
         holder.positionFinal.setText(Integer.toString(list.get(position).getPosition()));
         holder.image.setImageResource(R.drawable.avatar);
 
-        List<String> listPosition = new ArrayList<String>();
+        List<String> listPosition;
         listPosition = getListPosition(list.get(position).getLeague().getPunctuationType().getId());
         ArrayAdapter arrayAdapter = getAdapter(listPosition);
         holder.position.setAdapter(arrayAdapter);
-//        holder.position.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                String select = listPpString.get(position);
-//                // punctuation = ptc.findByName(select);
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
+        holder.position.setSelection(0, false);
+        holder.position.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Object select = parent.getItemAtPosition(position);
+                //String select = listPosition.get(position);
+                Alert.alert(select.toString(), context);
+                TeamLeague teamLeague = new TeamLeague(
+                        list.get(position-1).getTeam(), list.get(position-1).getLeague(),
+                        Integer.parseInt(select.toString()), null, 1);
+                listener.onItemClicked(teamLeague);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -93,7 +93,6 @@ public class LeagueDaoSQLITE implements leagueDAO {
                 + "pt.id = l.id_punctuation_type\r\n";
 
         List<League> list = new ArrayList<>();
-     //   Map<Integer, PunctuationType> map = new HashMap<>();
 
         Cursor cursor = sqliteDb.rawQuery(sql, null);
         if (cursor.getCount() > 0){

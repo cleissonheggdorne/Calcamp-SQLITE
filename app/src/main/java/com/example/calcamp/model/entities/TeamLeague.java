@@ -20,7 +20,7 @@ public class TeamLeague {
         this.league = league;
         this.position = position;
         this.punctuation = punctuation;
-        this.match = match;
+        this.match = (match == null)? 1 : match;
     }
 
     public TeamLeague(Team team, League league) {

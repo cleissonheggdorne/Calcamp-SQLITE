@@ -3,12 +3,15 @@ package com.example.calcamp.model.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.calcamp.controller.TeamLeagueController;
+
 public class League implements Parcelable {
 
     private Integer id;
     private String name;
     private PunctuationType punctuationType;
 
+    private Integer amountMatches;
     public League() {
 
     }

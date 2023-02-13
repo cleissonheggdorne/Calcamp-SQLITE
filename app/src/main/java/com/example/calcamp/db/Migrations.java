@@ -64,7 +64,7 @@ public class Migrations {
             "    )\n" +
             ");";
     private String triggerTeamLeagueClassification = "CREATE TRIGGER trigger_team_league_classification\n" +
-            "         AFTER INSERT\n" +
+            "         AFTER UPDATE OF position\n" +
             "            ON team_league\n" +
             "BEGIN\n" +
             "    UPDATE team_league\n" +

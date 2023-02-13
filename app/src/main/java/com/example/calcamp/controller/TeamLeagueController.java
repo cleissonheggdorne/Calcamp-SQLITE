@@ -52,4 +52,17 @@ public class TeamLeagueController {
             }
         }
     }
+    public Integer amountMatchController(Integer id){
+        teamLeagueDao = DAOFactory.createTeamLeagueDao(context);
+        return teamLeagueDao.amountMatch(id);
+    }
+
+    public void updatePositionController(List<TeamLeague> teamLeagueList) {
+        teamLeagueDao = DAOFactory.createTeamLeagueDao(context);
+        for(TeamLeague teamLeague : teamLeagueList){
+            if(teamLeagueDao.update(teamLeague) != -1){
+                continue;
+            }
+        }
+    }
 }

@@ -34,20 +34,30 @@ public class TeamLeagueDaoSQLITE implements TeamLeagueDAO {
         if(findByIdLeague(obj) != null){
             return -1;
         };
+
         ContentValues contentValues = new ContentValues();
         contentValues.put("id_team", obj.getTeam().getId());
         contentValues.put("id_league", obj.getLeague().getId());
         contentValues.put("position", obj.getPosition());
         contentValues.put("match", obj.getMatch());
         long id = sqliteDb.insert("team_league", null, contentValues);
+
         dbh.close();
         sqliteDb.close();
-        return id;
+        return 0;
     }
 
     @Override
     public long update(TeamLeague obj) {
-        return 0;
+        dbh.openDataBase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("position", obj.getPosition());
+        String whereClause = "id_team= ? and id_league= ? and match=?";
+        String [] whereArgs = new String[]{Integer.toString(obj.getTeam().getId()),
+                Integer.toString(obj.getLeague().getId()), Integer.toString(obj.getMatch())};
+        long state = sqliteDb.update("team_league",contentValues, whereClause, whereArgs);
+
+        return state;
     }
 
     @Override
@@ -97,8 +107,8 @@ public class TeamLeagueDaoSQLITE implements TeamLeagueDAO {
 
     protected League instantiateLeague(Cursor cursor, PunctuationType pt) {
         League league = new League();
-        league.setId(cursor.getInt(0));
-        league.setName(cursor.getString(1));
+        league.setId(cursor.getInt(2));
+        league.setName(cursor.getString(3));
         league.setPunctuationType(pt);
         return league;
     }
@@ -152,5 +162,21 @@ public class TeamLeagueDaoSQLITE implements TeamLeagueDAO {
         }
         cursor.close();
         return teamLeague;
+    }
+
+    public Integer amountMatch(Integer id){
+        dbh.openDataBase();
+        Integer amount = 0;
+        String sql = "SELECT MAX(match) FROM team_league\n" +
+                "WHERE id_league = " + id;
+        Cursor cursor = sqliteDb.rawQuery(sql, null);
+        if(cursor.getCount() > 0){
+            if(cursor.moveToFirst()){
+                amount = cursor.getInt(0);
+            }
+        }
+        dbh.close();
+        sqliteDb.close();
+        return amount;
     }
 }

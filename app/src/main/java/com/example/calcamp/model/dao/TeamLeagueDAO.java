@@ -11,6 +11,7 @@ public interface TeamLeagueDAO {
         long deleteById(Integer id);
         List<TeamLeague> findByIdLeague(Integer id);
         List<TeamLeague> findAll();
+        Integer amountMatch(Integer id);
 }
 
 

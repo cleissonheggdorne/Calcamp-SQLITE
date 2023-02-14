@@ -38,10 +38,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(migration.getTablePunctuationType());
         db.execSQL(migration.getTableTeamLeague());
         db.execSQL(migration.getTablePunctuationPosition());
-        db.execSQL(migration.getTableClassification());
         db.execSQL(migration.getTriggerTeamLeagueClassification());
         db.execSQL(migration.getInsertPunctuationType());
         db.execSQL(migration.getInsertPunctuationPosition());
+        db.execSQL(migration.getViewClassification());
     }
 
     @Override

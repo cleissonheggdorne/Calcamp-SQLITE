@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.calcamp.db.DataBaseHelper;
+import com.example.calcamp.db.Migrations;
 import com.example.calcamp.model.dao.TeamLeagueDAO;
 import com.example.calcamp.model.entities.League;
 import com.example.calcamp.model.entities.PunctuationType;

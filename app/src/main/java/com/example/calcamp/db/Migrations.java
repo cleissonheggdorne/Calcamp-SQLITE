@@ -5,8 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import java.io.StringBufferInputStream;
 
 public class Migrations {
-
-
     private String tableTeam =  "CREATE TABLE IF NOT EXISTS team (\n" +
                                 "id INTEGER PRIMARY KEY,\n" +
                                 "name VARCHAR (50) NOT NULL,\n" +
@@ -51,18 +49,6 @@ public class Migrations {
             "        position\n" +
             "    )\n" +
             ");";
-    private String tableClassification = "CREATE TABLE classification (\n" +
-            "    id_team           INTEGER NOT NULL\n" +
-            "                              REFERENCES team (id),\n" +
-            "    id_league         INTEGER NOT NULL\n" +
-            "                              REFERENCES league (id),\n" +
-            "    position_final    INTEGER,\n" +
-            "    punctuation_final INTEGER NOT NULL,\n" +
-            "    PRIMARY KEY (\n" +
-            "        id_team,\n" +
-            "        id_league\n" +
-            "    )\n" +
-            ");";
     private String triggerTeamLeagueClassification = "CREATE TRIGGER trigger_team_league_classification\n" +
             "         AFTER UPDATE OF position\n" +
             "            ON team_league\n" +
@@ -85,29 +71,6 @@ public class Migrations {
             "     WHERE id_team = NEW.id_team AND \n" +
             "           id_league = NEW.id_league AND \n" +
             "           [match] = NEW.[match];\n" +
-            "    INSERT INTO classification SELECT id_team,\n" +
-            "                                      id_league,\n" +
-            "                                      NULL,\n" +
-            "                                      punctuation\n" +
-            "                                 FROM team_league\n" +
-            "                                WHERE id_team = NEW.id_team AND \n" +
-            "                                      id_league = NEW.id_league AND \n" +
-            "                                      [match] = NEW.[match] ON CONFLICT (\n" +
-            "                                   id_team,\n" +
-            "                                   id_league\n" +
-            "                               )\n" +
-            "                               DO UPDATE SET punctuation_final = punctuation_final + (\n" +
-            "                                                                                         SELECT pp.score\n" +
-            "                                                                                           FROM team_league tl\n" +
-            "                                                                                                INNER JOIN\n" +
-            "                                                                                                league l ON tl.id_league = l.id\n" +
-            "                                                                                                INNER JOIN\n" +
-            "                                                                                                punctuation_position pp ON pp.id_punctuation_type = l.id_punctuation_type AND \n" +
-            "                                                                                                                           pp.position = tl.position\n" +
-            "                                                                                          WHERE tl.id_league = NEW.id_league AND \n" +
-            "                                                                                                tl.id_team = NEW.id_team AND \n" +
-            "                                                                                                tl.position = NEW.position\n" +
-            "                                                                                     );\n" +
             "END;\n";
 
     private String insertPunctuationPosition = "insert into punctuation_position(id_punctuation_type, position, score)\n" +
@@ -139,6 +102,23 @@ public class Migrations {
     private String insertPunctuationType = "INSERT INTO punctuation_type(name)\n" +
             "VALUES('LBFF NOVA'),\n"+
             "('LBFF VELHA')\n";
+
+    private String viewClassification = "CREATE VIEW view_classification AS\n" +
+            "    SELECT id_team,\n" +
+            "           id_league,\n" +
+            "           sum(pp.score) AS punctuation_final\n" +
+            "      FROM team_league tl\n" +
+            "           INNER JOIN\n" +
+            "           league l ON tl.id_league = l.id\n" +
+            "           INNER JOIN\n" +
+            "           punctuation_type pt ON pt.id = l.id_punctuation_type\n" +
+            "           INNER JOIN\n" +
+            "           punctuation_position pp ON pp.id_punctuation_type = pt.id AND \n" +
+            "                                      pp.position = tl.position\n" +
+            "     GROUP BY 1,\n" +
+            "              2\n" +
+            "     ORDER BY 2,\n" +
+            "              1;";
     public String getTableTeam() {
         return tableTeam;
     }
@@ -154,15 +134,9 @@ public class Migrations {
     public String getTableTeamLeague() {
         return tableTeamLeague;
     }
-
     public String getTablePunctuationPosition() {
         return tablePunctuationPosition;
     }
-
-    public String getTableClassification() {
-        return tableClassification;
-    }
-
     public String getTriggerTeamLeagueClassification() {
         return triggerTeamLeagueClassification;
     }
@@ -172,5 +146,9 @@ public class Migrations {
     }
     public String getInsertPunctuationType() {
         return insertPunctuationType;
+    }
+
+    public String getViewClassification() {
+        return viewClassification;
     }
 }

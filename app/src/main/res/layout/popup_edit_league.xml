@@ -85,6 +85,14 @@
                 android:layout_height="wrap_content"
                 android:text="Partidas" />
 
+            <Button
+                android:id="@+id/btnPopupActivityTeamLeagueScoreClassification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/black"
+                android:text="Classificação"
+                android:textColor="@color/white" />
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

@@ -3,6 +3,7 @@ package com.example.calcamp.model.dao;
 import android.content.Context;
 
 import com.example.calcamp.db.DataBaseHelper;
+import com.example.calcamp.model.implement.ClassificationDaoSQLite;
 import com.example.calcamp.model.implement.LeagueDaoSQLITE;
 import com.example.calcamp.model.implement.PunctuationPositionDaoSQLITE;
 import com.example.calcamp.model.implement.PunctuationTypeDaoSQLITE;
@@ -24,5 +25,8 @@ public class DAOFactory {
     }
     public static PunctuationPositionDAO createPunctuationPositionDao(Context context) {
         return new PunctuationPositionDaoSQLITE(new DataBaseHelper(context));
+    }
+    public static ClassificationDAO createClassificationDao(Context context) {
+        return new ClassificationDaoSQLite(new DataBaseHelper(context));
     }
 }

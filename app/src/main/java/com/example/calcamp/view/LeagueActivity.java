@@ -128,7 +128,7 @@ public class LeagueActivity extends AppCompatActivity implements SelectListener 
         EditText ename;
         ImageView image;
         Spinner spinner;
-        Button btnDelete, btnUpdate, btnTeams, btnActivityTeamLeagueScore;;
+        Button btnDelete, btnUpdate, btnTeams, btnActivityTeamLeagueScore, btnClassification;
 
         ename = (EditText) view.findViewById(R.id.etNamePopupLeague);
         image = (ImageView) view.findViewById(R.id.imagePopupLeague);
@@ -143,7 +143,7 @@ public class LeagueActivity extends AppCompatActivity implements SelectListener 
         btnUpdate = view.findViewById(R.id.btnUpdateLeague);
         btnTeams = view.findViewById(R.id.btnPopupAddTeams);
         btnActivityTeamLeagueScore = view.findViewById(R.id.btnPopupActivityTeamLeagueScore);
-
+        btnClassification = view.findViewById(R.id.btnPopupActivityTeamLeagueScoreClassification);
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,6 +189,14 @@ public class LeagueActivity extends AppCompatActivity implements SelectListener 
                 Intent teamLeagueScoreActivity = new Intent(getApplicationContext(), TeamLeagueScoreActivity.class);
                 teamLeagueScoreActivity.putExtra("league", (League) obj);
                 startActivity(teamLeagueScoreActivity);
+            }
+        });
+        btnClassification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent classification = new Intent(getApplicationContext(), ClassificationActivity.class);
+                classification.putExtra("league", (League) obj);
+                startActivity(classification);
             }
         });
 

@@ -17,7 +17,8 @@ public class Migrations {
     private String tableLeague =  "CREATE TABLE league (\n" +
             "    id                  INTEGER   PRIMARY KEY,\n" +
             "    name                TEXT (44),\n" +
-            "    image BLOB,\n"+
+            "    image BLOB,\n" +
+            "    amount_match INTEGER,\n"+
             "    id_punctuation_type INTEGER   NOT NULL\n" +
             "                                  REFERENCES punctuation_type (id),\n" +
             "    UNIQUE (\n" +
@@ -106,7 +107,10 @@ public class Migrations {
     private String viewClassification = "CREATE VIEW view_classification AS\n" +
             "    SELECT id_team,\n" +
             "           id_league,\n" +
-            "           sum(pp.score) AS punctuation_final\n" +
+            "           sum(pp.score) AS punctuation_final,\n" +
+            "ROW_NUMBER () OVER ( \n" +
+            "        ORDER BY sum(pp.score) desc \n" +
+            "    ) as position_final" +
             "      FROM team_league tl\n" +
             "           INNER JOIN\n" +
             "           league l ON tl.id_league = l.id\n" +

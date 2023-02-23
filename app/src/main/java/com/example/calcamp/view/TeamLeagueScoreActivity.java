@@ -33,6 +33,8 @@ public class TeamLeagueScoreActivity extends AppCompatActivity implements Select
     Button btnTeamLeagueScoreSave;
     private League league;
     protected ChipGroup chipGroup;
+
+    protected Chip chipAddMatch;
     protected List<TeamLeague> teamLeagueList = new ArrayList<>();
 
     @Override
@@ -48,8 +50,6 @@ public class TeamLeagueScoreActivity extends AppCompatActivity implements Select
         recycleViewTeamsLeague.setLayoutManager(new LinearLayoutManager(this));
 
         populateTeamsLeague();
-
-
         btnTeamLeagueScoreSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,12 +58,18 @@ public class TeamLeagueScoreActivity extends AppCompatActivity implements Select
             }
         });
         fillChips();
+
         chipGroup.setOnCheckedChangeListener (new ChipGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(ChipGroup group, int checkedId) {
-                Chip chip = findViewById(checkedId);
-                Log.i(chip.getText().toString(), "teste");
-                Alert.alert(chip.getText().toString(), getApplicationContext());
+                populateTeamsLeague(checkedId);
+            }
+        });
+
+        chipAddMatch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Alert.alert("Teste chip ADD", getApplicationContext());
             }
         });
 
@@ -74,11 +80,19 @@ public class TeamLeagueScoreActivity extends AppCompatActivity implements Select
         recycleViewTeams = (RecyclerView) findViewById(R.id.recycleViewTeams);
         btnTeamLeagueScoreSave = (Button) findViewById(R.id.btnTeamLeagueScoreSave);
         chipGroup = (ChipGroup) findViewById(R.id.chipGroupTeamLeagueScore);
+        chipAddMatch = (Chip) findViewById(R.id.chipAddMatch);
     }
 
-    protected void populateTeamsLeague(){
+    protected void populateTeamsLeague(Integer... match){
         TeamLeagueController teamLeagueController = new TeamLeagueController(this);
-        List<TeamLeague> list = teamLeagueController.findByIdLeague(league.getId());
+
+        //default value when entering open activity
+        Integer matchDefault = 1;
+        if(match.length > 0){
+            matchDefault = match[0];
+        }
+
+        List<TeamLeague> list = teamLeagueController.findByIdLeague(league.getId(), matchDefault);
         AdapterTeamLeague adapter = new AdapterTeamLeague(list, this);
         recycleViewTeamsLeague.setAdapter(adapter);
     }
@@ -87,13 +101,16 @@ public class TeamLeagueScoreActivity extends AppCompatActivity implements Select
         Integer amountMath;
         TeamLeagueController teamLeagueController = new TeamLeagueController(getApplicationContext());
         amountMath = teamLeagueController.amountMatchController(league.getId());
+        int maxMatch = 0;
         for(int i = 1; i <= amountMath; i++){
             Chip chip = new Chip(this);
             chip.setText("Partida " + i);
             chip.setId(i);
             chip.setCheckable(true);
             chipGroup.addView(chip);
+            maxMatch = i;
         }
+        chipGroup.check(1);
     }
 
     @Override

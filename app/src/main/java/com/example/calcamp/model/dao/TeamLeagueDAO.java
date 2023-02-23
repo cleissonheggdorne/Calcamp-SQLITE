@@ -9,7 +9,7 @@ public interface TeamLeagueDAO {
         long insert(TeamLeague obj);
         long update(TeamLeague obj);
         long deleteById(Integer id);
-        List<TeamLeague> findByIdLeague(Integer id);
+        List<TeamLeague> findByIdLeague(Integer id, Integer... match);
         List<TeamLeague> findAll();
         Integer amountMatch(Integer id);
 }

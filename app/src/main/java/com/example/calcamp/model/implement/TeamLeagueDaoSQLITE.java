@@ -67,8 +67,15 @@ public class TeamLeagueDaoSQLITE implements TeamLeagueDAO {
     }
 
     @Override
-    public List<TeamLeague> findByIdLeague(Integer id) {
+    public List<TeamLeague> findByIdLeague(Integer id, Integer... match) {
         dbh.openDataBase();
+        String where = "";
+        if (match.length > 0){
+            where = "WHERE tl.id_league = " + id +" AND \n" +
+                "tl.match = " + match[0];
+        }else{
+            where = "WHERE tl.id_league = " + id;
+        }
         List<TeamLeague> list = new ArrayList<TeamLeague>();
         String sql = "select t.id as idTeam, t.name as nameTeam," +
                 "l.id as idLeague, l.name as nameLeague," +
@@ -80,7 +87,7 @@ public class TeamLeagueDaoSQLITE implements TeamLeagueDAO {
                 "l.id = tl.id_league\n" +
                 "inner join punctuation_type pt on\n" +
                 "pt.id = l.id_punctuation_type\n" +
-                "WHERE tl.id_league = " + id;
+                 where;
         Cursor cursor = sqliteDb.rawQuery(sql, null);
         if (cursor.getCount() > 0){
             if(cursor.moveToFirst()){

@@ -39,9 +39,14 @@ public class TeamLeagueController {
         long ret = teamLeagueDao.update(teamLeague);
         return ret;
     }
-    public List<TeamLeague> findByIdLeague(Integer id){
+    public List<TeamLeague> findByIdLeague(Integer id, Integer... match){
         teamLeagueDao = DAOFactory.createTeamLeagueDao(context);
-        return teamLeagueDao.findByIdLeague(id);
+        if (match.length > 0){
+            return teamLeagueDao.findByIdLeague(id, match);
+        }else{
+            return teamLeagueDao.findByIdLeague(id);
+
+        }
     }
 
     public void insertListController(List<TeamLeague> teamLeagueList) {

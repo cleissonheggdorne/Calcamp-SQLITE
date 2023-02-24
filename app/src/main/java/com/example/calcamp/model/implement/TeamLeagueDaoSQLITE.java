@@ -32,20 +32,39 @@ public class TeamLeagueDaoSQLITE implements TeamLeagueDAO {
     @Override
     public long insert(TeamLeague obj) {
         dbh.openDataBase();
-        if(findByIdLeague(obj) != null){
-            return -1;
-        };
-
+        Integer maxMatchCurrent = maxMatchCurrent(obj.getLeague().getId());
         ContentValues contentValues = new ContentValues();
         contentValues.put("id_team", obj.getTeam().getId());
         contentValues.put("id_league", obj.getLeague().getId());
         contentValues.put("position", obj.getPosition());
         contentValues.put("match", obj.getMatch());
-        long id = sqliteDb.insert("team_league", null, contentValues);
-
+        if(maxMatchCurrent != null){
+            for(int i = 1; i <= maxMatchCurrent; i++){
+                contentValues.put("match", i);
+                long id = sqliteDb.insert("team_league", null, contentValues);
+            }
+        }else{
+            long id = sqliteDb.insert("team_league", null, contentValues);
+        }
         dbh.close();
         sqliteDb.close();
         return 0;
+    }
+
+    public Integer maxMatchCurrent(Integer id) {
+        dbh.openDataBase();
+        String sql = "SELECT max(match) FROM team_league WHERE id_league = " + id;
+        Cursor cursor = sqliteDb.rawQuery(sql, null);
+        if (cursor.getCount() > 0){
+            if(cursor.moveToFirst()){
+                do{
+                    return(cursor.getInt(0));
+                }while(cursor.moveToNext());
+            }
+        }
+        cursor.close();
+        sqliteDb.close();
+        return null;
     }
 
     @Override
@@ -70,12 +89,16 @@ public class TeamLeagueDaoSQLITE implements TeamLeagueDAO {
     public List<TeamLeague> findByIdLeague(Integer id, Integer... match) {
         dbh.openDataBase();
         String where = "";
-        if (match.length > 0){
-            where = "WHERE tl.id_league = " + id +" AND \n" +
-                "tl.match = " + match[0];
-        }else{
-            where = "WHERE tl.id_league = " + id;
+
+        //Condition for verify if 'match' was passed
+        if (!(match.length > 0)){
+            match = new Integer[1];
+            match[0] = 1;
         }
+
+        where = "WHERE tl.id_league = " + id +" AND \n" +
+                "tl.match = " + match[0];
+
         List<TeamLeague> list = new ArrayList<TeamLeague>();
         String sql = "select t.id as idTeam, t.name as nameTeam," +
                 "l.id as idLeague, l.name as nameLeague," +

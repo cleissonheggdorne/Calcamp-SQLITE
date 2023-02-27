@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.calcamp.model.dao.DAOFactory;
 import com.example.calcamp.model.dao.TeamLeagueDAO;
+import com.example.calcamp.model.entities.League;
 import com.example.calcamp.model.entities.PunctuationType;
 import com.example.calcamp.model.entities.TeamLeague;
 
@@ -19,7 +20,17 @@ public class TeamLeagueController {
 
     public long insertController(TeamLeague teamLeague){
         teamLeagueDao = DAOFactory.createTeamLeagueDao(context);
-        long ret = teamLeagueDao.insert(teamLeague);
+        Integer maxMatchCurrent = teamLeagueDao.maxMatchCurrent(teamLeague.getLeague().getId());
+        long ret = 0;
+        if(maxMatchCurrent != 0) {
+            for (int i = 1; i <= maxMatchCurrent; i++) {
+                teamLeague.setMatch(i);
+                ret = teamLeagueDao.insert(teamLeague);
+            }
+        }else{
+            ret = teamLeagueDao.insert(teamLeague);
+        }
+        teamLeagueDao.closeDb();
         return ret;
     }
 
@@ -69,5 +80,17 @@ public class TeamLeagueController {
                 continue;
             }
         }
+    }
+
+    public void addMatchInLeagueController(List<TeamLeague> teamLeagueList) {
+        teamLeagueDao = DAOFactory.createTeamLeagueDao(context);
+        Integer maxMatchCurrent = teamLeagueDao.maxMatchCurrent(teamLeagueList.get(0).getLeague().getId());
+        for(TeamLeague tl : teamLeagueList){
+            tl.setPosition(0);
+            tl.setPunctuation(0);
+            tl.setMatch(maxMatchCurrent+1);
+            teamLeagueDao.insert(tl);
+        }
+        teamLeagueDao.closeDb();
     }
 }

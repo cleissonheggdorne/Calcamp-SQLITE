@@ -7,16 +7,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.view.Menu;
+import android.widget.PopupWindow;
 
 import com.example.calcamp.adapters.AdapterTeam;
 import com.example.calcamp.R;
@@ -34,7 +40,7 @@ import java.util.List;
 public class EquipesActivity extends AppCompatActivity implements SelectListener {
     private DataBaseHelper database;
     private TeamDAO teamDao;
-
+    private Toolbar toolbar;
     private EditText name, idTeam;
     private Button button, buttonDelete;
 
@@ -49,6 +55,7 @@ public class EquipesActivity extends AppCompatActivity implements SelectListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipes);
         inicializarComponentes();
+        setSupportActionBar(toolbar);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recycleView.setLayoutManager(llm);
         popularList();
@@ -71,6 +78,7 @@ public class EquipesActivity extends AppCompatActivity implements SelectListener
         name = findViewById(R.id.etNameTeam);
         button = findViewById(R.id.btnNew);
         recycleView = findViewById(R.id.recycleView);
+        toolbar = findViewById(R.id.toolbar);
     }
 
     private void popularList() {
@@ -137,5 +145,48 @@ public class EquipesActivity extends AppCompatActivity implements SelectListener
     protected void reloadActivity(){
         this.recreate();
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_equipes, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.bar_btnAdd:
+                //Inflará o Layout personalizado
+                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                //View do Layout inflado
+                View popupView = inflater.inflate(R.layout.popup_edit, null);
+                ImageView image = popupView.findViewById(R.id.imagePopupTeam);
+                EditText editTextName = popupView.findViewById(R.id.etNamePopupTeam);
+                Button btnSave = popupView.findViewById(R.id.btnUpdateTeam);
+                Button btnDelete = popupView.findViewById(R.id.btnDeleteTeam);
+                btnSave.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Team team = new Team(null, editTextName.getText().toString());
+                        TeamController teamController = new TeamController(getApplicationContext());
+                        if(teamController.saveController(team) != -1){
+                            Alert.alert("New Team Inserted Successfully", getApplicationContext());
+                        }else{
+                            Alert.alert("Error inserting Team", getApplicationContext());
+                        }
+                    }
+                });
+                openPopup(popupView);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    protected void openPopup(View popupView) {
+        PopupWindow popupWindow;
+        popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setFocusable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+    }
 }

@@ -32,22 +32,12 @@ public class TeamLeagueDaoSQLITE implements TeamLeagueDAO {
     @Override
     public long insert(TeamLeague obj) {
         dbh.openDataBase();
-        Integer maxMatchCurrent = maxMatchCurrent(obj.getLeague().getId());
         ContentValues contentValues = new ContentValues();
         contentValues.put("id_team", obj.getTeam().getId());
         contentValues.put("id_league", obj.getLeague().getId());
         contentValues.put("position", obj.getPosition());
         contentValues.put("match", obj.getMatch());
-        if(maxMatchCurrent != null){
-            for(int i = 1; i <= maxMatchCurrent; i++){
-                contentValues.put("match", i);
-                long id = sqliteDb.insert("team_league", null, contentValues);
-            }
-        }else{
-            long id = sqliteDb.insert("team_league", null, contentValues);
-        }
-        dbh.close();
-        sqliteDb.close();
+        long id = sqliteDb.insert("team_league", null, contentValues);
         return 0;
     }
 
@@ -55,15 +45,11 @@ public class TeamLeagueDaoSQLITE implements TeamLeagueDAO {
         dbh.openDataBase();
         String sql = "SELECT max(match) FROM team_league WHERE id_league = " + id;
         Cursor cursor = sqliteDb.rawQuery(sql, null);
-        if (cursor.getCount() > 0){
-            if(cursor.moveToFirst()){
-                do{
-                    return(cursor.getInt(0));
-                }while(cursor.moveToNext());
-            }
+        if(cursor.moveToFirst()){
+            do{
+                return(cursor.getInt(0));
+            }while(cursor.moveToNext());
         }
-        cursor.close();
-        sqliteDb.close();
         return null;
     }
 
@@ -209,5 +195,10 @@ public class TeamLeagueDaoSQLITE implements TeamLeagueDAO {
         dbh.close();
         sqliteDb.close();
         return amount;
+    }
+
+    public void closeDb(){
+        dbh.close();
+        sqliteDb.close();
     }
 }

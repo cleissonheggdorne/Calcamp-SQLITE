@@ -12,6 +12,8 @@ public interface TeamLeagueDAO {
         List<TeamLeague> findByIdLeague(Integer id, Integer... match);
         List<TeamLeague> findAll();
         Integer amountMatch(Integer id);
+        Integer maxMatchCurrent(Integer id);
+        void closeDb();
 }
 
 

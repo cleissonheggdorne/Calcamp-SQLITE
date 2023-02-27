@@ -6,22 +6,21 @@ import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
 
 import com.example.calcamp.R;
-import com.example.calcamp.db.Migrations;
-import com.example.calcamp.model.dao.DAOFactory;
-import com.example.calcamp.view.LeagueActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     private Object View;
-
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         CardView cardTeam = (CardView) findViewById(R.id.cardTeam);
         CardView cardLeague = (CardView) findViewById(R.id.cardLeague);
 
@@ -40,7 +39,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(LeagueActivity);
             }
         });
-
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_equipes, menu);
+        return true;
     }
 
 }

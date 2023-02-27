@@ -2,8 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/add"
+        android:id="@+id/bar_btnAdd"
         android:icon="@drawable/add_generic"
         android:title="search_title"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/bar_search"
+        android:title="Busca"
+        android:icon="@drawable/search"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/bar_func1"
+        android:title="Funcionalidade 1"/>
 </menu>

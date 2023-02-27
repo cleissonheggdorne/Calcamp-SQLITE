@@ -33,7 +33,6 @@ public class TeamLeagueScoreActivity extends AppCompatActivity implements Select
     Button btnTeamLeagueScoreSave;
     private League league;
     protected ChipGroup chipGroup;
-
     protected Chip chipAddMatch;
     protected List<TeamLeague> teamLeagueList = new ArrayList<>();
 
@@ -69,6 +68,9 @@ public class TeamLeagueScoreActivity extends AppCompatActivity implements Select
         chipAddMatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TeamLeagueController teamLeagueController = new TeamLeagueController(getApplicationContext());
+                teamLeagueController.addMatchInLeagueController(teamLeagueList);
+
                 Alert.alert("Teste chip ADD", getApplicationContext());
             }
         });
@@ -92,8 +94,8 @@ public class TeamLeagueScoreActivity extends AppCompatActivity implements Select
             matchDefault = match[0];
         }
 
-        List<TeamLeague> list = teamLeagueController.findByIdLeague(league.getId(), matchDefault);
-        AdapterTeamLeague adapter = new AdapterTeamLeague(list, this);
+        teamLeagueList = teamLeagueController.findByIdLeague(league.getId(), matchDefault);
+        AdapterTeamLeague adapter = new AdapterTeamLeague(teamLeagueList, this);
         recycleViewTeamsLeague.setAdapter(adapter);
     }
 
@@ -115,10 +117,11 @@ public class TeamLeagueScoreActivity extends AppCompatActivity implements Select
 
     @Override
     public void onItemClicked(Object obj) {
-        populateArrayListTeamLeague((TeamLeague) obj);
+
+        //populateArrayListTeamLeague((TeamLeague) obj);
     }
 
-    private void populateArrayListTeamLeague(TeamLeague obj) {
-        teamLeagueList.add(obj);
-    }
+    //private void populateArrayListTeamLeague(TeamLeague obj) {
+        //teamLeagueList.add(obj);
+    //}
 }

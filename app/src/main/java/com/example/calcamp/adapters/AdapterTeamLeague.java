@@ -64,7 +64,12 @@ public class AdapterTeamLeague extends RecyclerView.Adapter<AdapterTeamLeague.My
         listPosition = getListPosition(list.get(position).getLeague().getPunctuationType().getId());
         ArrayAdapter arrayAdapter = getAdapter(listPosition);
         holder.position.setAdapter(arrayAdapter);
-        holder.position.setSelection(0, false);
+        if(list.get(position).getPosition() == 0){
+            holder.position.setSelection(0, false);
+        }else{
+            holder.position.setSelection(listPosition.indexOf(Integer.toString(list.get(position).getPosition())));
+        }
+
         holder.position.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int positionSelected, long id) {
@@ -72,7 +77,7 @@ public class AdapterTeamLeague extends RecyclerView.Adapter<AdapterTeamLeague.My
                 //String select = listPosition.get(position);
                 TeamLeague teamLeague = new TeamLeague(
                         list.get(position).getTeam(), list.get(position).getLeague(),
-                        Integer.parseInt(select.toString()), null, 1);
+                        Integer.parseInt(select.toString()), null, list.get(position).getMatch());
                 listener.onItemClicked(teamLeague);
             }
 

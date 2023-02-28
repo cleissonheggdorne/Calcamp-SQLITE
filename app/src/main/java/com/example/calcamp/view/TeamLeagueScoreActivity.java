@@ -8,7 +8,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import com.example.calcamp.R;
 import com.example.calcamp.SelectListener;
@@ -32,9 +35,13 @@ public class TeamLeagueScoreActivity extends AppCompatActivity implements Select
 
     Button btnTeamLeagueScoreSave;
     private League league;
+
+    protected Spinner spinner;
     protected ChipGroup chipGroup;
     protected Chip chipAddMatch;
     protected List<TeamLeague> teamLeagueList = new ArrayList<>();
+    protected List<TeamLeague> teamLeagueListUp = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +60,7 @@ public class TeamLeagueScoreActivity extends AppCompatActivity implements Select
             @Override
             public void onClick(View v) {
                 TeamLeagueController teamLeagueController = new TeamLeagueController(getApplicationContext());
-                teamLeagueController.updatePositionController(teamLeagueList);
+                teamLeagueController.updatePositionController(teamLeagueListUp);
             }
         });
         fillChips();
@@ -116,7 +123,7 @@ public class TeamLeagueScoreActivity extends AppCompatActivity implements Select
 
     @Override
     public void onItemClicked(Object obj) {
-
+        teamLeagueListUp.add((TeamLeague) obj);
     }
 
 }

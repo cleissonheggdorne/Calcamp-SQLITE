@@ -34,11 +34,9 @@ import java.util.List;
 public class LeagueActivity extends AppCompatActivity implements SelectListener {
     private DataBaseHelper database;
     private leagueDAO leagueDao;
-
     private EditText name, idTeam;
     private Button button, buttonDelete;
     private Toolbar toolbar;
-
     private Spinner spinner;
 
     private List<League> list = new ArrayList<League>();
@@ -53,7 +51,6 @@ public class LeagueActivity extends AppCompatActivity implements SelectListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_league);
         inicializarComponentes();
-       // setSupportActionBar(toolbar);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recycleView.setLayoutManager(llm);
         popularList();
@@ -104,7 +101,6 @@ public class LeagueActivity extends AppCompatActivity implements SelectListener 
         button = findViewById(R.id.btnNew);
         recycleView = findViewById(R.id.recycleView);
         spinner = (Spinner) findViewById(R.id.spinnerTypePunctuation);
-        //toolbar = (Toolbar) findViewById(R.id.toolbar);
     }
 
     private void popularList() {

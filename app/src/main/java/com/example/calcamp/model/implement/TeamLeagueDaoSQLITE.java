@@ -94,7 +94,7 @@ public class TeamLeagueDaoSQLITE implements TeamLeagueDAO {
         String sql = "select t.id as idTeam, t.name as nameTeam," +
                 "l.id as idLeague, l.name as nameLeague," +
                 " l.id_punctuation_type as idPunctuationType, pt.name as namePuncutuationType," +
-                " tl.position, tl.punctuation from team_league tl\n" +
+                " tl.position, tl.punctuation, tl.'match' from team_league tl\n" +
                 "inner join team t on\n" +
                 "t.id = tl.id_team\n" +
                 "inner join league l on\n" +
@@ -148,6 +148,7 @@ public class TeamLeagueDaoSQLITE implements TeamLeagueDAO {
         teamLeague.setLeague(league);
         teamLeague.setPosition(cursor.getInt(6));
         teamLeague.setPunctuation(7);
+        teamLeague.setMatch(cursor.getInt(8));
         return teamLeague;
     }
 

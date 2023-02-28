@@ -67,8 +67,13 @@ public class TeamLeagueDaoSQLITE implements TeamLeagueDAO {
     }
 
     @Override
-    public long deleteById(Integer id) {
-        return 0;
+    public long deleteByObj(TeamLeague teamLeague) {
+        dbh.openDataBase();
+        long ret = sqliteDb.delete("team_league", "id_team = " + teamLeague.getTeam().getId() +"\n"+
+                "and id_league = " + teamLeague.getLeague().getId() , null);
+        dbh.close();
+        sqliteDb.close();
+        return ret;
     }
 
     @Override

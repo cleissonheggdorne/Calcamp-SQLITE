@@ -70,8 +70,7 @@ public class TeamLeagueScoreActivity extends AppCompatActivity implements Select
             public void onClick(View v) {
                 TeamLeagueController teamLeagueController = new TeamLeagueController(getApplicationContext());
                 teamLeagueController.addMatchInLeagueController(teamLeagueList);
-
-                Alert.alert("Teste chip ADD", getApplicationContext());
+                recreate();
             }
         });
 
@@ -118,10 +117,6 @@ public class TeamLeagueScoreActivity extends AppCompatActivity implements Select
     @Override
     public void onItemClicked(Object obj) {
 
-        //populateArrayListTeamLeague((TeamLeague) obj);
     }
 
-    //private void populateArrayListTeamLeague(TeamLeague obj) {
-        //teamLeagueList.add(obj);
-    //}
 }

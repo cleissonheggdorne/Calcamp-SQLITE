@@ -20,9 +20,13 @@ public class TeamLeagueController {
 
     public long insertController(TeamLeague teamLeague){
         teamLeagueDao = DAOFactory.createTeamLeagueDao(context);
+
+        //check number of existing items
         Integer maxMatchCurrent = teamLeagueDao.maxMatchCurrent(teamLeague.getLeague().getId());
         long ret = 0;
+
         if(maxMatchCurrent != 0) {
+            //loop to insert from multiple matches
             for (int i = 1; i <= maxMatchCurrent; i++) {
                 teamLeague.setMatch(i);
                 ret = teamLeagueDao.insert(teamLeague);
@@ -34,14 +38,23 @@ public class TeamLeagueController {
         return ret;
     }
 
+    public boolean existingTeamInLeague(TeamLeague teamLeague){
+        teamLeagueDao = DAOFactory.createTeamLeagueDao(context);
+        List<TeamLeague> teamLeagueList = teamLeagueDao.findByIdLeague(teamLeague.getLeague().getId());
+        if(teamLeagueList.contains(teamLeague)) {
+            return true;
+        }
+        return false;
+    }
+
     public long saveController(TeamLeague teamLeague){
         teamLeagueDao = DAOFactory.createTeamLeagueDao(context);
         long id = teamLeagueDao.insert(teamLeague);
         return id;
     }
-    public long deleteController(Integer id){
+    public long deleteController(TeamLeague teamLeague){
         teamLeagueDao = DAOFactory.createTeamLeagueDao(context);
-        long ret = teamLeagueDao.deleteById(id);
+        long ret = teamLeagueDao.deleteByObj(teamLeague);
         return ret;
     }
 

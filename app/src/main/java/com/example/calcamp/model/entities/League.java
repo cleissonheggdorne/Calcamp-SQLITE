@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.example.calcamp.controller.TeamLeagueController;
 
+import java.util.Objects;
+
 public class League implements Parcelable {
 
     private Integer id;
@@ -71,6 +73,19 @@ public class League implements Parcelable {
     @Override
     public String toString() {
         return "League [id=" + id + ", name=" + name + ", PunctuationType=" + punctuationType + "]";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        League league = (League) o;
+        return id.equals(league.id) && name.equals(league.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 
     @Override

@@ -123,6 +123,11 @@ public class TeamLeagueScoreActivity extends AppCompatActivity implements Select
 
     @Override
     public void onItemClicked(Object obj) {
+
+    }
+
+    @Override
+    public void onItemChanged(Object obj) {
         teamLeagueListUp.add((TeamLeague) obj);
     }
 

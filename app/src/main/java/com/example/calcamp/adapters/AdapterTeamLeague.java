@@ -78,7 +78,7 @@ public class AdapterTeamLeague extends RecyclerView.Adapter<AdapterTeamLeague.My
                 TeamLeague teamLeague = new TeamLeague(
                         list.get(position).getTeam(), list.get(position).getLeague(),
                         Integer.parseInt(select.toString()), null, list.get(position).getMatch());
-                listener.onItemClicked(teamLeague);
+                listener.onItemChanged(teamLeague);
             }
 
             @Override
@@ -91,6 +91,7 @@ public class AdapterTeamLeague extends RecyclerView.Adapter<AdapterTeamLeague.My
             @Override
             public void onClick(View v) {
                 listener.onItemClicked(list.get(position));
+
             }
         });
     }
@@ -131,7 +132,7 @@ public class AdapterTeamLeague extends RecyclerView.Adapter<AdapterTeamLeague.My
             this.image = itemView.findViewById(R.id.adapterImageTeam);
             this.positionFinal = itemView.findViewById(R.id.adapterTvPositionFinal);
             this.position = itemView.findViewById(R.id.adapterTeamLeagueSpinner);
-            this.cardView = itemView.findViewById(R.id.cardView);
+            this.cardView = itemView.findViewById(R.id.adapterListTeamLeagueCardView);
         }
     }
 }

@@ -57,4 +57,7 @@ public class ClassificationActivity extends AppCompatActivity implements SelectL
     public void onItemClicked(Object obj) {
 
     }
+    public void onItemChanged(Object obj){
+
+    }
 }

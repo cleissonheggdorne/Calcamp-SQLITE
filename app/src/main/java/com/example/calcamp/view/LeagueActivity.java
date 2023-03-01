@@ -200,6 +200,11 @@ public class LeagueActivity extends AppCompatActivity implements SelectListener 
         data.create().show();
     }
 
+    @Override
+    public void onItemChanged(Object obj) {
+
+    }
+
     protected void reloadActivity(){
         this.recreate();
     }

@@ -74,14 +74,13 @@ public class TeamLeagueActivity extends AppCompatActivity implements SelectListe
 
     @Override
     public void onItemClicked(Object obj) {
-        TeamLeagueController teamLeagueController = new TeamLeagueController(this);
-
-        if(obj.getClass() == Team.class){
+        TeamLeagueController teamLeagueController = new TeamLeagueController(getApplicationContext());
+        if(obj.getClass() == Team.class) {
             Team team = (Team) obj;
             TeamLeague teamLeague = new TeamLeague(team, league, 0, 0, null);
-            if(teamLeagueController.insertController(teamLeague) != -1){
+            if (teamLeagueController.insertController(teamLeague) != -1) {
                 Alert.alert("New Team Inserted Successfully", this);
-            }else{
+            } else {
                 Alert.alert("Error inserting Team", this);
             }
         }else if (obj.getClass() == TeamLeague.class){
@@ -92,5 +91,8 @@ public class TeamLeagueActivity extends AppCompatActivity implements SelectListe
             }
         }
         this.recreate();
+    }
+    public void onItemChanged(Object obj){
+
     }
 }

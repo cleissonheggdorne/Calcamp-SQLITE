@@ -1,19 +1,23 @@
 package com.example.calcamp.view;
 
-import androidx.annotation.NonNull;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +25,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.view.Menu;
 import android.widget.PopupWindow;
 
 import com.example.calcamp.adapters.AdapterTeam;
@@ -34,19 +37,24 @@ import com.example.calcamp.model.dao.DAOFactory;
 import com.example.calcamp.model.entities.Team;
 import com.example.calcamp.tools.Alert;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EquipesActivity extends AppCompatActivity implements SelectListener {
-    private DataBaseHelper database;
-    private TeamDAO teamDao;
+public class TeamActivity extends AppCompatActivity implements SelectListener {
+//    private DataBaseHelper database;
+//    private TeamDAO teamDao;
     private Toolbar toolbar;
-    private EditText name, idTeam;
-    private Button button, buttonDelete;
+    private EditText name;
+    
+    protected EditText popupEditTextName;
+    protected ImageView popupImage;
+    protected Button popupBtnDelete, popupBtnUpdate;
 
     private List<Team> list = new ArrayList<Team>();
-    private ArrayAdapter<Team> aaTeam;
+    //private ArrayAdapter<Team> aaTeam;
     private RecyclerView recycleView;
+    private ActivityResultLauncher<String> pickImageLauncher;
 
     ArrayList<Team> teamList = new ArrayList<Team>();
 
@@ -54,11 +62,20 @@ public class EquipesActivity extends AppCompatActivity implements SelectListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipes);
-        inicializarComponentes();
+        initializeComponents();
         setSupportActionBar(toolbar);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recycleView.setLayoutManager(llm);
-        popularList();
+        populateList();
+
+        pickImageLauncher = registerForActivityResult(
+                new ActivityResultContracts.GetContent(),
+                new ActivityResultCallback<Uri>() {
+                    @Override
+                    public void onActivityResult(Uri uri) {
+                        popupImage.setImageURI(uri);
+                    }
+                });
     }
 
     public void save(View view){
@@ -74,14 +91,13 @@ public class EquipesActivity extends AppCompatActivity implements SelectListener
 
     }
 
-    private void inicializarComponentes() {
+    private void initializeComponents() {
         name = findViewById(R.id.etNameTeam);
-        button = findViewById(R.id.btnNew);
         recycleView = findViewById(R.id.recycleView);
         toolbar = findViewById(R.id.toolbar);
     }
 
-    private void popularList() {
+    private void populateList() {
         list.clear();
         TeamDAO teamDao = DAOFactory.createTeamDao(this);
         List<Team> list = teamDao.findAll();
@@ -98,21 +114,11 @@ public class EquipesActivity extends AppCompatActivity implements SelectListener
 
         AlertDialog.Builder data = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.popup_edit,null);
+        initializeComponentsPopup(view);
 
-        EditText ename;
-        ImageView image;
-        Button btnDelete, btnUpdate;
-
-        ename = (EditText) view.findViewById(R.id.etNamePopupTeam);
-        image = (ImageView) view.findViewById(R.id.imagePopupTeam);
-
-        ename.setText(team.getName());
-        image.setImageResource(R.drawable.avatar);
-
-        btnDelete = view.findViewById(R.id.btnDeleteTeam);
-        btnUpdate = view.findViewById(R.id.btnUpdateTeam);
-
-        btnDelete.setOnClickListener(new View.OnClickListener() {
+        popupEditTextName.setText(team.getName());
+        popupImage.setImageResource(R.drawable.avatar);
+        popupBtnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(teamController.deleteController(team.getId()) == 1 ){
@@ -125,10 +131,10 @@ public class EquipesActivity extends AppCompatActivity implements SelectListener
             }
         });
 
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
+        popupBtnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                team.setName(ename.getText().toString());
+                team.setName(popupEditTextName.getText().toString());
                 if(teamController.updateController(team) == 1){
                     Alert.alert("Team Updated", getApplicationContext());
                 }else{
@@ -165,14 +171,13 @@ public class EquipesActivity extends AppCompatActivity implements SelectListener
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                 //View do Layout inflado
                 View popupView = inflater.inflate(R.layout.popup_edit, null);
-                ImageView image = popupView.findViewById(R.id.imagePopupTeam);
-                EditText editTextName = popupView.findViewById(R.id.etNamePopupTeam);
-                Button btnSave = popupView.findViewById(R.id.btnUpdateTeam);
-                Button btnDelete = popupView.findViewById(R.id.btnDeleteTeam);
-                btnSave.setOnClickListener(new View.OnClickListener() {
+                initializeComponentsPopup(popupView);
+                popupImage.setImageResource(R.drawable.avatar);
+                popupBtnUpdate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Team team = new Team(null, editTextName.getText().toString());
+                        byte[] imageByte = transformInArrayOfBytes(popupImage);
+                        Team team = new Team(null, popupEditTextName.getText().toString());
                         TeamController teamController = new TeamController(getApplicationContext());
                         if(teamController.saveController(team) != -1){
                             Alert.alert("New Team Inserted Successfully", getApplicationContext());
@@ -181,11 +186,28 @@ public class EquipesActivity extends AppCompatActivity implements SelectListener
                         }
                     }
                 });
+
+                popupImage.setOnClickListener(view -> pickImageLauncher.launch("popupImage/*"));
                 openPopup(popupView);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private byte[] transformInArrayOfBytes(ImageView popupImage) {
+        //Converted in bitmap
+        Bitmap bitmap = ((BitmapDrawable) popupImage.getDrawable()).getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        return stream.toByteArray();
+    }
+
+    protected void initializeComponentsPopup(View view){
+        popupImage = view.findViewById(R.id.imagePopupTeam);
+        popupEditTextName = view.findViewById(R.id.etNamePopupTeam);
+        popupBtnUpdate = view.findViewById(R.id.btnUpdateTeam);
+        popupBtnDelete = view.findViewById(R.id.btnDeleteTeam);
     }
     protected void openPopup(View popupView) {
         PopupWindow popupWindow;

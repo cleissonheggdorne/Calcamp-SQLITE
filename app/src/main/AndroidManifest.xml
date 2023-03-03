@@ -28,7 +28,7 @@
             android:name=".view.LeagueActivity"
             android:exported="false" />
         <activity
-            android:name=".view.EquipesActivity"
+            android:name=".view.TeamActivity"
             android:exported="false" />
         <activity
             android:name=".view.MainActivity"

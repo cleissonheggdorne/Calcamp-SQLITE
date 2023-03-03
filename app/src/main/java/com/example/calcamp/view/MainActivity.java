@@ -21,23 +21,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        CardView cardTeam = (CardView) findViewById(R.id.cardTeam);
-        CardView cardLeague = (CardView) findViewById(R.id.cardLeague);
+        CardView cardTeam = findViewById(R.id.cardTeam);
+        CardView cardLeague = findViewById(R.id.cardLeague);
 
-        cardTeam.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(android.view.View v) {
-                Intent EquipesActivity = new Intent(getApplicationContext(), com.example.calcamp.view.EquipesActivity.class);
-                startActivity(EquipesActivity);
-            }
+        cardTeam.setOnClickListener(v -> {
+            Intent TeamActivity = new Intent(getApplicationContext(), com.example.calcamp.view.TeamActivity.class);
+            startActivity(TeamActivity);
         });
 
-        cardLeague.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(android.view.View v) {
+        cardLeague.setOnClickListener(v ->{
                 Intent LeagueActivity = new Intent(getApplicationContext(), com.example.calcamp.view.LeagueActivity.class);
                 startActivity(LeagueActivity);
-            }
         });
     }
     @Override

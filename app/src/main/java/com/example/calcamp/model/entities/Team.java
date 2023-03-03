@@ -5,14 +5,16 @@ import java.util.Objects;
 public class Team {
     private Integer id;
     private String name;
+    private byte[] image;
 
     public Team () {
 
     }
 
-    public Team(Integer id, String name) {
+    public Team(Integer id, String name, byte[] image) {
         this.id = id;
         this.name = name;
+        this.image = image;
     }
 
     public int getId() {
@@ -31,6 +33,14 @@ public class Team {
     @Override
     public String toString() {
         return "Team [id=" + id + ", name=" + name + "]";
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     @Override

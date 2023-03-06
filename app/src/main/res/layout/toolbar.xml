@@ -9,6 +9,7 @@
         style="@style/Widget.AppCompat.ActionBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
         app:title="">
 
         <androidx.appcompat.widget.Toolbar
@@ -17,7 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/menu"
-            app:title="@string/app_name" />
+            app:title="@string/app_name"
+            app:titleTextColor="@color/white"/>
 
 
     </androidx.appcompat.widget.Toolbar>

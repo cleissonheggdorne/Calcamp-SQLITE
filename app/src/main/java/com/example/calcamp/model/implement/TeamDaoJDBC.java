@@ -29,6 +29,7 @@ public class TeamDaoJDBC implements TeamDAO {
         dbh.openDataBase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", obj.getName());
+        contentValues.put("image", obj.getImage());
         long id = sqliteDb.insert("team", null, contentValues);
         dbh.close();
         sqliteDb.close();
@@ -64,7 +65,7 @@ public class TeamDaoJDBC implements TeamDAO {
         if (cursor.getCount() > 0){
             if(cursor.moveToFirst()){
                 do{
-                    return(new Team(cursor.getInt(0), cursor.getString(1)));
+                    return(new Team(cursor.getInt(cursor.getColumnIndexOrThrow("id")), cursor.getString(cursor.getColumnIndexOrThrow("name")), cursor.getBlob(cursor.getColumnIndexOrThrow("image"))));
                 }while(cursor.moveToNext());
             }
         }
@@ -89,7 +90,7 @@ public class TeamDaoJDBC implements TeamDAO {
         if (cursor.getCount() > 0){
             if(cursor.moveToFirst()){
                 do{
-                    Team team = new Team(cursor.getInt(0), cursor.getString(1));
+                    Team team = new Team(cursor.getInt(cursor.getColumnIndexOrThrow("id")), cursor.getString(cursor.getColumnIndexOrThrow("name")), cursor.getBlob(cursor.getColumnIndexOrThrow("image")));
                     list.add(team);
                 }while(cursor.moveToNext());
             }
@@ -110,7 +111,7 @@ public class TeamDaoJDBC implements TeamDAO {
         if (cursor.getCount() > 0){
             if(cursor.moveToFirst()){
                 do{
-                    Team team = new Team(cursor.getInt(0), cursor.getString(1));
+                    Team team = new Team(cursor.getInt(cursor.getColumnIndexOrThrow("id")), cursor.getString(cursor.getColumnIndexOrThrow("name")), cursor.getBlob(cursor.getColumnIndexOrThrow("image")));
                     list.add(team);
                 }while(cursor.moveToNext());
             }

@@ -48,7 +48,7 @@ public class AdapterTeam extends RecyclerView.Adapter<AdapterTeam.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.name.setText(list.get(position).getName());
-        holder.image.setDefaultImageResId(R.drawable.avatar);
+        holder.image.setImageResource(R.drawable.avatar);
         holder.id.setText(Integer.toString(list.get(position).getId()));
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +71,7 @@ public class AdapterTeam extends RecyclerView.Adapter<AdapterTeam.MyViewHolder> 
         TextView id;
         CardView cardView;
 
-        NetworkImageView image;
+        ImageView image;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);

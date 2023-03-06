@@ -78,18 +78,18 @@ public class TeamActivity extends AppCompatActivity implements SelectListener {
                 });
     }
 
-    public void save(View view){
-        Team team = new Team(null, name.getText().toString());
-        team.setName(name.getText().toString());
-        TeamController teamController = new TeamController(this);
-        if(teamController.saveController(team) != -1){
-            Alert.alert("New Team Inserted Successfully", this);
-        }else{
-            Alert.alert("Error inserting Team", this);
-        }
-        this.recreate();
-
-    }
+//    public void save(View view){
+//        Team team = new Team(null, name.getText().toString());
+//        team.setName(name.getText().toString());
+//        TeamController teamController = new TeamController(this);
+//        if(teamController.saveController(team) != -1){
+//            Alert.alert("New Team Inserted Successfully", this);
+//        }else{
+//            Alert.alert("Error inserting Team", this);
+//        }
+//        this.recreate();
+//
+//    }
 
     private void initializeComponents() {
         name = findViewById(R.id.etNameTeam);
@@ -177,7 +177,7 @@ public class TeamActivity extends AppCompatActivity implements SelectListener {
                     @Override
                     public void onClick(View v) {
                         byte[] imageByte = transformInArrayOfBytes(popupImage);
-                        Team team = new Team(null, popupEditTextName.getText().toString());
+                        Team team = new Team(null, popupEditTextName.getText().toString(), imageByte);
                         TeamController teamController = new TeamController(getApplicationContext());
                         if(teamController.saveController(team) != -1){
                             Alert.alert("New Team Inserted Successfully", getApplicationContext());

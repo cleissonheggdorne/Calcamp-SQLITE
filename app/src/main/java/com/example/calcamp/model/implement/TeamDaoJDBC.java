@@ -41,7 +41,7 @@ public class TeamDaoJDBC implements TeamDAO {
         dbh.openDataBase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", obj.getName());
-        //contentValues.put("image", obj.getImage());
+        contentValues.put("image", obj.getImage());
         long ret = sqliteDb.update("team", contentValues, "id = "+ obj.getId(), null);
         dbh.close();
         sqliteDb.close();

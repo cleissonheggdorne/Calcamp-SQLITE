@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -78,19 +79,6 @@ public class TeamActivity extends AppCompatActivity implements SelectListener {
                 });
     }
 
-//    public void save(View view){
-//        Team team = new Team(null, name.getText().toString());
-//        team.setName(name.getText().toString());
-//        TeamController teamController = new TeamController(this);
-//        if(teamController.saveController(team) != -1){
-//            Alert.alert("New Team Inserted Successfully", this);
-//        }else{
-//            Alert.alert("Error inserting Team", this);
-//        }
-//        this.recreate();
-//
-//    }
-
     private void initializeComponents() {
         name = findViewById(R.id.etNameTeam);
         recycleView = findViewById(R.id.recycleView);
@@ -117,7 +105,19 @@ public class TeamActivity extends AppCompatActivity implements SelectListener {
         initializeComponentsPopup(view);
 
         popupEditTextName.setText(team.getName());
-        popupImage.setImageResource(R.drawable.avatar);
+
+        byte[] image = team.getImage();
+        Bitmap finalBitmapDefault = BitmapFactory.decodeResource(getResources(),R.drawable.avatar);
+        Bitmap bitmapSelected = null;
+        if(image != null){
+            //conversion of blob in object bitmap
+            bitmapSelected = BitmapFactory.decodeByteArray(image,0, image.length);
+            popupImage.setImageBitmap(bitmapSelected);
+        }else{
+            popupImage.setImageBitmap(finalBitmapDefault);
+        }
+        //Open gallery
+        popupImage.setOnClickListener(viewImage -> pickImageLauncher.launch("Image/*"));
         popupBtnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,6 +134,12 @@ public class TeamActivity extends AppCompatActivity implements SelectListener {
         popupBtnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(finalBitmapDefault != null){
+                    byte[] imageByte = transformInArrayOfBytes(popupImage);
+                    team.setImage(imageByte);
+                }else{
+                    team.setImage(null);
+                }
                 team.setName(popupEditTextName.getText().toString());
                 if(teamController.updateController(team) == 1){
                     Alert.alert("Team Updated", getApplicationContext());

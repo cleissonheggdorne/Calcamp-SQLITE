@@ -10,76 +10,81 @@
     <include layout="@layout/toolbar" />
    <LinearLayout
        android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="horizontal">
+       android:layout_height="match_parent"
+       android:orientation="vertical"
+       android:background="@color/colorSecondary">
 
+       <com.google.android.material.card.MaterialCardView
+           android:id="@+id/cardTeam"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginLeft="16dp"
+           android:layout_marginTop="20dp"
+           android:layout_marginRight="16dp"
+           android:layout_marginBottom="16dp"
+           android:background="@drawable/avatar"
+           app:cardBackgroundColor="@color/colorPrimary"
+           app:cardCornerRadius="15dp"
+           app:cardElevation="4dp"
+           app:strokeWidth="1dp">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardTeam"
-        android:layout_width="160dp"
-        android:layout_height="180dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="70dp"
-        app:cardBackgroundColor="?attr/colorPrimaryDark"
-        app:cardCornerRadius="4dp">
-        
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="bottom"
-            android:background="#ffffff"
-            android:padding="8dp">
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:orientation="horizontal"
+               android:padding="8dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:text="Equipes"
-                android:textAppearance="?attr/textAppearanceHeadline6"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:text="Cadastrar"
-                android:textAppearance="?attr/textAppearanceBody2"/>
+               <ImageView
+                   android:layout_width="130dp"
+                   android:layout_height="130dp"
+                   android:background="@drawable/teams" />
 
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+               <TextView
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:gravity="center"
+                   android:padding="2dp"
+                   android:text="Equipes"
+                   android:textColor="@color/white"
+                   android:textAppearance="?attr/textAppearanceHeadline6" />
+
+           </LinearLayout>
+       </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardLeague"
-        android:layout_width="160dp"
-        android:layout_height="180dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="70dp"
-        app:cardBackgroundColor="?attr/colorPrimaryDark"
-        app:cardCornerRadius="4dp">
+        android:layout_marginTop="20dp"
+        android:background="@drawable/podium"
+        app:cardCornerRadius="15dp"
+        android:layout_gravity="center"
+        app:strokeWidth="1dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_gravity="bottom"
-            android:background="#ffffff"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal"
             android:padding="8dp">
+
+            <ImageView
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:background="@drawable/podium" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
                 android:padding="2dp"
                 android:text="Ligas"
-                android:textAppearance="?attr/textAppearanceHeadline6"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:text="Cadastrar"
-                android:textAppearance="?attr/textAppearanceBody2"/>
+                android:textColor="@color/white"
+                android:textAppearance="?attr/textAppearanceHeadline6" />
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

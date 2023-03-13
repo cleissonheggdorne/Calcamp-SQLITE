@@ -12,16 +12,18 @@ public class League implements Parcelable {
     private Integer id;
     private String name;
     private PunctuationType punctuationType;
+    private byte[] image;
 
     private Integer amountMatches;
     public League() {
 
     }
 
-    public League(Integer id, String name, PunctuationType punctuationType) {
+    public League(Integer id, String name, PunctuationType punctuationType, byte[] image) {
         this.id = id;
         this.name = name;
         this.punctuationType = punctuationType;
+        this.image = image;
     }
 
     protected League(Parcel in) {
@@ -69,6 +71,13 @@ public class League implements Parcelable {
         this.punctuationType = punctuationType;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 
     @Override
     public String toString() {

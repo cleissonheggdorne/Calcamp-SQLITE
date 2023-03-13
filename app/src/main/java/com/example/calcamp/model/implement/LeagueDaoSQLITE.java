@@ -33,6 +33,7 @@ public class LeagueDaoSQLITE implements leagueDAO {
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", obj.getName());
         contentValues.put("id_punctuation_type", obj.getPunctuationType().getId());
+        contentValues.put("image", obj.getImage());
         long id = sqliteDb.insert("league", null, contentValues);
         dbh.close();
         sqliteDb.close();
@@ -45,7 +46,7 @@ public class LeagueDaoSQLITE implements leagueDAO {
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", obj.getName());
         contentValues.put("id_punctuation_type", obj.getPunctuationType().getId());
-        //contentValues.put("image", obj.getImage());
+        contentValues.put("image", obj.getImage());
         long ret = sqliteDb.update("league", contentValues, "id = "+ obj.getId(), null);
         dbh.close();
         sqliteDb.close();
@@ -69,7 +70,10 @@ public class LeagueDaoSQLITE implements leagueDAO {
         if (cursor.getCount() > 0){
             if(cursor.moveToFirst()){
                 do{
-                    return(new League(cursor.getInt(0), cursor.getString(1), null));
+                    return(new League(cursor.getInt(cursor.getColumnIndexOrThrow("id")),
+                            cursor.getString(cursor.getColumnIndexOrThrow("name")),
+                            null,
+                            cursor.getBlob(cursor.getColumnIndexOrThrow("image"))));
                 }while(cursor.moveToNext());
             }
         }
@@ -88,7 +92,12 @@ public class LeagueDaoSQLITE implements leagueDAO {
     @Override
     public List<League> findAll(){
         dbh.openDataBase();
-        String sql = "SELECT l.id, l.name,l.id_punctuation_type, pt.name as name_punctuation_type FROM league l\r\n"
+        String sql = "SELECT l.id,\n"
+                + " l.name,\n"
+                + "l.id_punctuation_type,\n"
+                + "pt.name as name_punctuation_type,\n"
+                + "l.image\n"
+                + " FROM league l\r\n"
                 + "INNER JOIN punctuation_type pt on\r\n"
                 + "pt.id = l.id_punctuation_type\r\n";
 
@@ -118,6 +127,7 @@ public class LeagueDaoSQLITE implements leagueDAO {
         league.setId(cursor.getInt(0));
         league.setName(cursor.getString(1));
         league.setPunctuationType(pt);
+        league.setImage(cursor.getBlob(cursor.getColumnIndexOrThrow("image")));
         return league;
     }
 

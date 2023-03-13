@@ -1,6 +1,8 @@
 package com.example.calcamp.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +49,17 @@ public class AdapterLeague extends RecyclerView.Adapter<AdapterLeague.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull AdapterLeague.MyViewHolder holder, int position) {
         holder.name.setText(list.get(position).getName());
-        holder.image.setImageResource(R.drawable.avatar);
+
+        byte[] image = list.get(position).getImage();
+        Bitmap bitmap;
+        if(image != null){
+            //conversion of blob in object bitmap
+            bitmap = BitmapFactory.decodeByteArray(image,0, image.length);
+            holder.image.setImageBitmap(bitmap);
+        }else{
+            holder.image.setImageResource(R.drawable.avatar);
+        }
+
         holder.id.setText(Integer.toString(list.get(position).getId()));
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {

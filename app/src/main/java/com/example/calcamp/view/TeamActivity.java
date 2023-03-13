@@ -22,7 +22,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -33,7 +32,6 @@ import com.example.calcamp.R;
 import com.example.calcamp.SelectListener;
 import com.example.calcamp.controller.TeamController;
 import com.example.calcamp.model.dao.TeamDAO;
-import com.example.calcamp.db.DataBaseHelper;
 import com.example.calcamp.model.dao.DAOFactory;
 import com.example.calcamp.model.entities.Team;
 import com.example.calcamp.tools.Alert;
@@ -43,8 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeamActivity extends AppCompatActivity implements SelectListener {
-//    private DataBaseHelper database;
-//    private TeamDAO teamDao;
+
     private Toolbar toolbar;
     private EditText name;
     
